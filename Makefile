@@ -2,8 +2,8 @@ CXX:=clang++
 CXXFLAGS:=-std=c++14 -Wall -Wextra -Werror -O3 -I.
 LDFLAGS:=`simple2d --libs` -lpthread -lpython2.7
 
-OBJ:=main.o BoardGraphics.o
-DEP:=BoardGraphics.hpp
+OBJ:=main.o BoardGraphics.o pyWrap.o
+DEP:=BoardGraphics.hpp pyWrap.hpp
 
 all : RoboTutor
 

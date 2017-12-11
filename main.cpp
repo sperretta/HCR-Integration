@@ -1,10 +1,14 @@
 #include <BoardGraphics.hpp>
+#include <pyWrap.hpp>
 
 #include <iostream>
 #include <limits>
 
-int main()
+int main( int argc, char **argv )
 {
+	Py_Initialize();
+    PySys_SetArgv( argc, argv );
+
     BoardGraphics bg;
 
     bg.start();
@@ -13,5 +17,6 @@ int main()
 
     bg.end();
 
+	Py_Finalize();
     return 0;
 }
