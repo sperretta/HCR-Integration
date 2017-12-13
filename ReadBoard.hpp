@@ -1,9 +1,14 @@
 #ifndef READBOARD_HPP
 #define READBOARD_HPP
 
+//#include <chrono>
+//#include <thread>
+
 #include <GameEngine/enum.hpp>
 
 #include <pyWrap.hpp>
+
+//using namespace std::chrono_literals;
 
 class ReadBoard :
     public pyWrap
@@ -13,6 +18,7 @@ class ReadBoard :
         ~ReadBoard() = default;
         std::vector<Piece> operator()( std::string camera )
         {
+		//std::this_thread::sleep_for(300ms);
             PyObject *pValue1;
 
             pValue1 = PyString_FromString( camera.c_str() );

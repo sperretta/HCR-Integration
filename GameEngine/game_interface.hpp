@@ -21,7 +21,7 @@ class GameInterface{
         DebugOutput debugOutput;
         GameInfo handle_ai_move(std::vector<Piece> gameBoard);
         GameInfo handle_user_move(std::vector<Piece> gameBoard);
-        std::vector<unsigned> find_captures(std::vector<Piece> gameBoard);
+        std::vector<unsigned> find_captures(std::vector<Piece> gameBoard, Move move);
 
     public:
         GameInterface(Piece _robot, unsigned _aiDifficulty);

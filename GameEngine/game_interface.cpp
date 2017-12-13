@@ -103,15 +103,21 @@ GameInfo GameInterface::handle_user_move(std::vector<Piece> gameBoard){
         gameInfo.moveStatus = bothPartial;
         gameInfo.clarificationNeeded = true;
         gameInfo.partialMove = true;
+	//TODO:
+	//Can't use captures because we dont' know which way they wanted to take
+        //gameInfo.captures = find_captures(gameBoard);
+	//Maybe do by appending the two vectors for either direction together
         return gameInfo;
     }
     else if(detected==withdrawlPartial){
         gameInfo.moveStatus = withdrawlPartial;
+        gameInfo.captures = find_captures(gameBoard, userMove);
         return gameInfo;
     }
     else if(detected==approachPartial){
         //Get use to remove correct pieces
         gameInfo.moveStatus = approachPartial;
+        gameInfo.captures = find_captures(gameBoard, userMove);
         return gameInfo;
     }
     else if(detected==noMove){
@@ -197,9 +203,7 @@ GameInfo GameInterface::handle_ai_move(std::vector<Piece> gameBoard){
     else if(gameInfo.moveStatus==bothPartial||gameInfo.moveStatus==withdrawlPartial||gameInfo.moveStatus==approachPartial){
         GameEngine tempEngine = gameEngine;
         if(detectedMove.equals(moveList.at(0))){
-            tempEngine.make_move(moveList.at(0));
-            std::vector<unsigned> captures;
-            gameInfo.captures = find_captures(gameBoard);
+            gameInfo.captures = find_captures(gameBoard, moveList.at(0));
             return gameInfo;
         }
         else{
@@ -222,12 +226,14 @@ Piece GameInterface::get_current_player(){
     return gameEngine.get_current_player();
 }
 
-std::vector<unsigned> GameInterface::find_captures(std::vector<Piece> gameBoard){
+std::vector<unsigned> GameInterface::find_captures(std::vector<Piece> gameBoard, Move move){
+    GameEngine tempEngine = gameEngine;
+    tempEngine.make_move(move);
     std::vector<unsigned> captures;
     for(unsigned x=0; x<9; x++){
         for(unsigned y=0; y<5; y++){
-            if(gameEngine.get_player(x,y)==gameEngine.get_opponent()){
-                if(gameBoard.at(on(x,y)) == none){
+            if(tempEngine.get_player(x,y)==none){
+                if(gameBoard.at(on(x,y)) == tempEngine.get_opponent()){
                     captures.push_back(on(x,y));
                 }
             }

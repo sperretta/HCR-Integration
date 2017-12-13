@@ -10,6 +10,7 @@
 #include <Interfacing.hpp>
 #include <SpeechRecog.hpp>
 #include <Gesturing.hpp>
+#include <SpeechSynthesis.hpp>
 
 #define DIFFICULTY 3
 
@@ -44,6 +45,7 @@ class Interfacing
         std::shared_ptr<ReadBoard> m_readBoard;
 	std::shared_ptr<SpeechRecog> m_speechRecog;
 	std::shared_ptr<Gesturing> m_gesturing;
+	std::shared_ptr<SpeechSynthesis> m_synthesis;
 };
 
 #endif // INTERFACING_HPP

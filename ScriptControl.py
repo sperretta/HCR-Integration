@@ -5,8 +5,8 @@ class ChoiceScriptComponent:
     def __init__(self,options):
         self._options = options
         self._locks = [0] * len(options)
-        if len(self._locks) < ChoiceScriptComponent.LOCK_LENGTH-1:
-            self.LOCK_LENGTH = len(self._locks)-1
+        if len(self._locks) < ChoiceScriptComponent.LOCK_LENGTH:
+            self.LOCK_LENGTH = len(self._locks)-2
 
     def _reduceLock(self):
         self._locks[:] = [(lockLength-1) if lockLength > 0 else 0 for lockLength in self._locks]

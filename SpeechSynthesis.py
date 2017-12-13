@@ -27,3 +27,47 @@ class SpeechSynthesis:
                         )
                     )
         self._tts.say(self._script[speechToken].generateScriptLine())
+
+def speakWords(robotip, input_d):
+    if input_d == 1:
+        token = SpeechToken.Vocalise
+    elif input_d == 2:
+        token = SpeechToken.CheckHelpNeeded
+    elif input_d == 3:
+        token = SpeechToken.Greeting
+    elif input_d == 4:
+        token = SpeechToken.CheckUnderstanding
+    elif input_d == 5:
+        token = SpeechToken.MovePieces
+    elif input_d == 6:
+        token = SpeechToken.Introduction
+    elif input_d == 7:
+        token = SpeechToken.AskToPlay
+    elif input_d == 8:
+        token = SpeechToken.AskIfNeedTeaching
+    elif input_d == 9:
+        token = SpeechToken.YourTurn
+    elif input_d == 10:
+        token = SpeechToken.MyTurn
+    elif input_d == 11:
+        token = SpeechToken.IllegalMove
+    elif input_d == 12:
+        token = SpeechToken.YouWin
+    elif input_d == 13:
+        token = SpeechToken.IWin
+    elif input_d == 14:
+        token = SpeechToken.GameNameIs
+    elif input_d == 15:
+        token = SpeechToken.GameAimIs
+    elif input_d == 16:
+        token = SpeechToken.HowCapturePieces
+    elif input_d == 17:
+        token = SpeechToken.HowMove
+    elif input_d == 18:
+        token = SpeechToken.YouCheat
+    
+    speech_engine = SpeechSynthesis(robotip)
+    
+    speech_engine.sayToUser(token)
+    
+   

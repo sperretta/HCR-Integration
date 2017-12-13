@@ -212,12 +212,12 @@ def search_dict(input_str):
     for i in range(0, len(dictionary_list)):
         for j in range(0, len(dictionary_list[i])):
             edit_dist = edit_distance_lib.SequenceMatcher(a=dictionary_list[i][j], b=input_str)
-            print input_str, dictionary_list[i][j], i,j,edit_dist.distance()
+            #print input_str, dictionary_list[i][j], i,j,edit_dist.distance()
             if edit_dist.distance()<tmp_val:
                 tmp_val = edit_dist.distance()
                 tmp_idx = i
                 #print "New min value!"
-    return dictionary_list[tmp_idx][0], tmp_val
+    return str(dictionary_list[tmp_idx][0]), tmp_val
 
 #if __name__ == '__main__':
     #while True:
@@ -238,10 +238,10 @@ def search_dict(input_str):
             #print "Nothing heard"
     
 def get_command(timeout = 10.0, edit_dist_JR_val = 20):
-    print("please speak a word into the microphone")
+    #print("please speak a word into the microphone")
     
     timeout_flag = record_to_file('demo.wav', timeout)
-    print timeout_flag
+    #print timeout_flag
     if not timeout_flag:
         return "Timeout!"
     #print("done - result written to demo.raw")
@@ -250,7 +250,7 @@ def get_command(timeout = 10.0, edit_dist_JR_val = 20):
     try:
         text, confidence = ms_asr.transcribe('demo.wav')
         text_data = text.split(' ')
-        print "Text: ", text.split(' ')
+        #print "Text: ", text.split(' ')
         
         
         command, edit_dist_JR = search_dict(str(" ".join(text_data)))
@@ -258,12 +258,12 @@ def get_command(timeout = 10.0, edit_dist_JR_val = 20):
         if edit_dist_JR > edit_dist_JR_val:
             return "Command Not Recognised"
         
-        print "Command: ", command
+        #print "Command: ", command
         return command
         
         
     except KeyError:
-        print "Nothing heard"
+        #print "Nothing heard"
         return "Nothing"
         
 #print get_command()

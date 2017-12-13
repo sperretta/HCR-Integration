@@ -61,6 +61,9 @@ Interfacing::Interfacing( int argc, char **argv, HighState initialState ) : m_cu
 
     // Initialise gesturing
     m_gesturing = std::make_shared<Gesturing>();
+
+    // Initialise speech synthesis
+    m_synthesis = std::make_shared<SpeechSynthesis>();
 }
 
 Interfacing::~Interfacing()
@@ -149,7 +152,24 @@ void Interfacing::update()
                     if( m_gameInterface->get_current_player() == p2 && gameInfo.displayMove.mov_dir != no_dir )
                     {
                         // TODO: Do this once and wait!!
+	    		(*m_synthesis)("192.168.0.100", MyTurn);
                         std::cout << "Move the AI piece!" << std::endl;
+			// TODO: Robot say this and point
+			if( (int)gameInfo.displayMove.x >= 0 && (int)gameInfo.displayMove.x <= 2 ) // 0-2
+			{
+			    (*m_synthesis)("192.168.0.100", MovePieces);
+	    			(*m_gesturing)("192.168.0.100", 1);
+			}
+			else if( (int)gameInfo.displayMove.x >= 3 && (int)gameInfo.displayMove.x <= 5 ) // 3-5
+			{
+			    (*m_synthesis)("192.168.0.100", MovePieces);
+	    			(*m_gesturing)("192.168.0.100", 2);
+			}
+			if( (int)gameInfo.displayMove.x >= 6 && (int)gameInfo.displayMove.x <= 8 ) // 6-8
+			{
+				(*m_synthesis)("192.168.0.100", MovePieces);
+	    			(*m_gesturing)("192.168.0.100", 0);
+			}
                         m_boardGraphics.setPosState( gameInfo.displayMove.x, gameInfo.displayMove.y, PositionState::FlashGreen, movDirToArrow(gameInfo.displayMove.mov_dir) );
                         std::cout << "(" << gameInfo.displayMove.x << ", " << gameInfo.displayMove.y << ")";
                         switch( gameInfo.displayMove.mov_dir )
@@ -184,27 +204,38 @@ void Interfacing::update()
                     }
                     else if( m_gameInterface->get_current_player() == p1 && gameInfo.moveStatus == noMove) // If gameInfo is in a state where there are no more possible moves...
                     {
-                        // TODO: Listen for user saying their turn is over
+			// TODO: Get robot to say this instead
+	    		(*m_synthesis)("192.168.0.100", YourTurn);
                         std::cout << "Would you like to pass your turn?" << std::endl;
-                        //char c;
-                        //std::cin >> c;
-                        //if( c == 'y' )
-                        //{
-                        //    m_gameInterface->pass_turn();
-                        //}
-                        //else
-                        //{
-                        //    continue;
-                        //}
+
 			std::string response("");
 
-			response = (*m_speechRecog)(10, 600);
-			std::cout << response << std::endl;
+			// TODO: Say something 
+			do {
+			    response = (*m_speechRecog)(10, 20);
+			} while(response != "yes" && response != "no");
+
+			if( response == "yes" )
+			{
+			    m_gameInterface->pass_turn();
+			}
+			else
+			{
+			    continue;
+			}
                     }
                     else if( gameInfo.displayMove.mov_dir == no_dir )
                     {
                         m_boardGraphics.clearStates();
+	    		(*m_gesturing)("192.168.0.100", 3);
                     }
+		    // TODO: Put this in the right place
+			for( auto& piece : gameInfo.captures )
+			{
+				unsigned x = piece % 9;
+				unsigned y = piece / 9;
+				m_boardGraphics.setPosState( x, y, PositionState::FlashGreen, Arrow::None );
+			}
                     // TODO: Handle other input? Cancelling game etc?
                 }
                 else
@@ -229,6 +260,9 @@ void Interfacing::transitionState( HighState nextState )
     // TODO: Also do things based on current state
     switch( m_currentHighState )
     {
+        case HighState::Wait: // NON-BLOCKING
+		break;
+
         case HighState::PlayNoHelp: // BLOCKING
             m_boardGraphics.setActive( false );
             break;
@@ -240,6 +274,7 @@ void Interfacing::transitionState( HighState nextState )
     {
         case HighState::Wait:
             // TODO: Setup face recognition
+	    (*m_synthesis)("192.168.0.100", Greeting);
             m_currentHighState = HighState::Wait;
             break;
 
@@ -258,7 +293,6 @@ void Interfacing::transitionState( HighState nextState )
             break;
 
         case HighState::PlayNoHelp: // BLOCKING
-	    (*m_gesturing)("192.168.0.100", 1);
             m_gameInterface = std::make_shared<GameInterface>(p2, DIFFICULTY);
             m_gameInterface->enable_debug();
             m_boardGraphics.setActive( true );
