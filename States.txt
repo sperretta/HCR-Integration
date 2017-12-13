@@ -1,0 +1,46 @@
+High level states:
+
+- Wait
+
+    In this state, the robot is waiting for a player to approach it such that it can start the interaction.
+
+    Input: Player face detected.
+    Next state: Intro.
+
+- Intro
+
+    In this state, the robot explains its function and purpose to the player and asks them whether they would like a tutorial on the game.
+
+    Input: Yes or no (depending on whether the player would like the tutorial).
+    Next state: Tutorial (if yes), Check help needed (if no).
+
+- Tutorial
+
+    In this state, the robot explains the game to the player and shows some examples in order to help them understand.
+
+    Contains multiple lower-level states.
+
+    Input: Multiple.
+    Next state: Check help needed.
+
+- Check help needed
+
+    In this state, the robot offers to play a game with the user and asks them whether they would like help.
+
+    Input: Yes, no.
+    Next state: Play (help) (if yes), Play (no help) (if no)
+
+- Play (help)
+
+    Contains multiple lower-level states.
+
+- Play (no help)
+
+    Contains multiple lower-level states.
+
+- End
+
+    In this state, the robot has ended its interaction with the user and is waiting for the next interaction to begin.
+
+    Input: No face detected (player leaving)
+    Next state: Wait.

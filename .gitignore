@@ -1,2 +1,5 @@
 RoboTutor
 *.o
+*.a
+*.jpg
+*.pyc
