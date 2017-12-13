@@ -15,7 +15,7 @@ Move::Move(){
 };
 
 bool Move::equals(Move m2){
-    return (x = m2.x && y == m2.y && mov_dir == m2.mov_dir && cap_dir == m2.cap_dir);
+    return (x == m2.x && y == m2.y && mov_dir == m2.mov_dir && cap_dir == m2.cap_dir);
 } 
 
 bool Move::was_pass(){

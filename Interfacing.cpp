@@ -49,10 +49,18 @@ Interfacing::Interfacing( int argc, char **argv, HighState initialState ) : m_cu
     // Initialise python
 	Py_Initialize();
     PySys_SetArgv( argc, argv );
+
+    // Initialise readboard
     m_readBoard = std::make_shared<ReadBoard>();
 
     // Initialise board graphics
     m_boardGraphics.start();
+
+    // Initialise speech recognition
+    m_speechRecog = std::make_shared<SpeechRecog>();
+
+    // Initialise gesturing
+    m_gesturing = std::make_shared<Gesturing>();
 }
 
 Interfacing::~Interfacing()
@@ -178,16 +186,20 @@ void Interfacing::update()
                     {
                         // TODO: Listen for user saying their turn is over
                         std::cout << "Would you like to pass your turn?" << std::endl;
-                        char c;
-                        std::cin >> c;
-                        if( c == 'y' )
-                        {
-                            m_gameInterface->pass_turn();
-                        }
-                        else
-                        {
-                            continue;
-                        }
+                        //char c;
+                        //std::cin >> c;
+                        //if( c == 'y' )
+                        //{
+                        //    m_gameInterface->pass_turn();
+                        //}
+                        //else
+                        //{
+                        //    continue;
+                        //}
+			std::string response("");
+
+			response = (*m_speechRecog)(10, 600);
+			std::cout << response << std::endl;
                     }
                     else if( gameInfo.displayMove.mov_dir == no_dir )
                     {
@@ -246,6 +258,7 @@ void Interfacing::transitionState( HighState nextState )
             break;
 
         case HighState::PlayNoHelp: // BLOCKING
+	    (*m_gesturing)("192.168.0.100", 1);
             m_gameInterface = std::make_shared<GameInterface>(p2, DIFFICULTY);
             m_gameInterface->enable_debug();
             m_boardGraphics.setActive( true );

@@ -8,6 +8,8 @@
 
 #include <ReadBoard.hpp>
 #include <Interfacing.hpp>
+#include <SpeechRecog.hpp>
+#include <Gesturing.hpp>
 
 #define DIFFICULTY 3
 
@@ -40,6 +42,8 @@ class Interfacing
         //FaceRecognition faceRecognition;
         std::shared_ptr<GameInterface> m_gameInterface;
         std::shared_ptr<ReadBoard> m_readBoard;
+	std::shared_ptr<SpeechRecog> m_speechRecog;
+	std::shared_ptr<Gesturing> m_gesturing;
 };
 
 #endif // INTERFACING_HPP
