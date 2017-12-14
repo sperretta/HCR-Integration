@@ -201,9 +201,9 @@ yes_list = ['yes', 'yeah', 'affirmative', 'yea', 'fine', 'good', 'okay', 'ok', '
 no_list = ['no', 'nay', 'never', 'nope', 'not', 'negative']
 reset_list = ['restart', 'reset', 'reboot']
 pass_list = ['pass', 'skip', 'done', 'complete', 'finished', 'your turn']
-help_list = ['help', 'assistance', 'assistant', 'please help', 'I dont understand what to do', "I'm confused", 'what am I supposed to do', 'give me a hand' ]
-game_info = ['what is the game called', 'information', ' info', 'robot please tell me about this game']
-robot_hello = ['hello robot', 'hi robot']
+help_list = ['help', 'assistance', 'assistant', 'help', 'I dont understand', "confused", 'supposed to do', 'give hand' ]
+game_info = ['game called', 'information', ' info', 'robot tell game']
+robot_hello = ['hello robot', 'hi robot', 'hello']
 
 dictionary_list = [yes_list, no_list, reset_list, pass_list, help_list, game_info, robot_hello]
 
