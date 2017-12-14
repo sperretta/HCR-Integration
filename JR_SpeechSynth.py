@@ -38,7 +38,7 @@ Introduction = [[[   " This game is called Fanorona, it is for two players",
                     ],
                 [
                     " and you can move up to one space in each direction in one turn, if you capture at least one piece per move",
-                    " in one turn you can move up to one space in each direction, provided you capture a piece per move",
+                    " in one turn, you can move up to one space in each direction, provided you capture a piece per move",
                     " provided you capture a piece in each move, you can move up to one space in each direction in a turn"
                     ]],
                 [[
@@ -47,9 +47,9 @@ Introduction = [[[   " This game is called Fanorona, it is for two players",
                     " In a turn you have to move at least once"
                     ],
                 [
-                    " and when moving you must capture if its possible",
+                    " and when moving, you must capture if its possible",
                     " if its possible to capture and you choose to move, you must move to capture",
-                    " capturing moves always take priority"
+                    " capturing moves always take priority over non capturing moves"
                     ]]]
 
 CheckUnderstanding = [[[" Does that make sense",
@@ -88,11 +88,19 @@ Greeting = [[[  " Hello",
             
 MovePieces = [[[" Could you move that piece?",
                 " Would you move that piece?",
-                " Please move my piece from there to there"]]]
+                " Please move my piece from there to there",
+                " Please move my piece darling human",
+                " please could you move that piece",
+                " please would you move that piece, it is too far for me to reach!",
+                " would you move that piece, I can't reach",
+                " Please move my piece across, I cant reach it!"]]]
 
 AskToPlay = [[[" Would you like to play a game?",
                     " Do you want to play a game?",
-                    " Would one kindly wish to partake in a game?"]]]
+                    " Would one kindly wish to partake in a game?"
+                    ],
+                [" I would like to use the orange pieces. Orange is the best colour as you can see from me"
+                    ]]]
 
 AskIfNeedTeaching = [[[" Do you need me to",
                     " Would you like me to",
@@ -297,7 +305,7 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = DidntUnderstand
 
     else:
-        token = ["Invalid Command"]
+        token = ["Error Error, Invalid Command"]
     
     #print "Token: ", token
     for i in range(0, len(token)):
