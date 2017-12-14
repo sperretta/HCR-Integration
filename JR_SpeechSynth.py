@@ -52,145 +52,145 @@ Introduction = [[[   " This game is called Fanorona, it is for two players",
                     " capturing moves always take priority"
                     ]]]
 
-CheckUnderstanding = [[["Does that make sense",
-                "Do you understand this",
-                "Would you like me to repeat that"]]]
+CheckUnderstanding = [[[" Does that make sense",
+                " Do you understand this",
+                " Would you like me to repeat that"]]]
 
-Vocalise = [[["Umm",
-                "Err",
-                "Uhh",
-                "Hmm"]]]
+Vocalise = [[[" Umm",
+                " Err",
+                " Uhh",
+                " Hmm"]]]
 
 CheckHelpNeeded = [[[
-                "Hmm, ",
+                " Hmm, ",
                 ]],
             [[
-                "Would you like ",
-                "Do you want ",
-                "Are you in need of ",
+                " Would you like ",
+                " Do you want ",
+                " Are you in need of ",
                 ],
             [
-                "some help",
-                "a bit of help",
-                "some assistance",
-                "a gameplay tip",
-                "some advice",
+                " some help",
+                " a bit of help",
+                " some assistance",
+                " a gameplay tip",
+                " some advice",
                 ]]]
             
-Greeting = [[[  "Hello",
-                "Greetings",
-                "Hi"
+Greeting = [[[  " Hello",
+                " Greetings",
+                " Hi"
                 ]],
             [[
-                "welcome to this learning experience",
-                "and welcome"
+                " welcome to this learning experience",
+                " and welcome"
                 ]]]
             
-MovePieces = [[["Could you move that piece?",
-                "Would you move that piece?",
-                "Please move my piece from there to there"]]]
+MovePieces = [[[" Could you move that piece?",
+                " Would you move that piece?",
+                " Please move my piece from there to there"]]]
 
-AskToPlay = [[["Would you like to play a game?",
-                    "Do you want to play a game?",
-                    "Would one kindly wish to partake in a game?"]]]
+AskToPlay = [[[" Would you like to play a game?",
+                    " Do you want to play a game?",
+                    " Would one kindly wish to partake in a game?"]]]
 
-AskIfNeedTeaching = [[["Do you need me to",
-                    "Would you like me to",
-                    "Should I"
+AskIfNeedTeaching = [[[" Do you need me to",
+                    " Would you like me to",
+                    " Should I"
                     ],
                 [
-                    "teach you",
-                    "show you how",
-                    "help you learn"
+                    " teach you",
+                    " show you how",
+                    " help you learn"
                     ],
                 [
-                "to play?"]]]
+                " to play?"]]]
                 
-YourTurn = [[["It's your turn to move.",
-                    "Your turn.",
-                    "Your go.",
-                    "You can move now"]]]
+YourTurn = [[[" It's your turn to move.",
+                    " Your turn.",
+                    " Your go.",
+                    " You can move now"]]]
 
-MyTurn = [[["My turn",
-                    "Sit back and watch the master play",
-                    "My turn to move",
-                    "My go"]]]
+MyTurn = [[[" My turn",
+                    " Sit back and watch the master play",
+                    " My turn to move",
+                    " My go"]]]
 
-IllegalMove = [[["You can't make that move",
-                    "Nice try, but that isn't allowed",
-                    "That's an illegal move",
-                    "You can't move there"]]]
+IllegalMove = [[[" You can't make that move",
+                    " Nice try, but that isn't allowed",
+                    " That's an illegal move",
+                    " You can't move there"]]]
 
-YouWin = [[["Congratulations",
-                    "Well done",
-                    "Hooray"
+YouWin = [[[" Congratulations",
+                    " Well done",
+                    " Hooray"
                 ]],
                 [[
-                    "the student has become the master,",
+                    " the student has become the master,",
 
                     ]],
                 [[
-                    "you win!",
-                    "you've won!",
-                    "you beat me."
+                    " you win!",
+                    " you've won!",
+                    " you beat me."
                     ]],
                 [[
                     " I will have my revenge."]]]
 
-IWin = [[["I win,"]],
+IWin = [[[" I win,"]],
         
                 [[
-                    "better luck next time",
-                    "oh well, perhaps next time",
-                    "sorry about that old chum",
+                    " better luck next time",
+                    " oh well, perhaps next time",
+                    " sorry about that old chum",
                     ]]]
 
-GameNameIs = [[["This game is called Fanorama",
-                    "Fanoarama is a two player game"]]]
+GameNameIs = [[[" This game is called Fanorama",
+                    " Fanoarama is a two player game"]]]
 
-GameAimIs = [[["The aim of the game is to capture all enemy pieces",
-                    "Your aim is to capture all the opponent's pieces",
-                    "You want to have no enemy pieces remaining"]]]
+GameAimIs = [[[" The aim of the game is to capture all enemy pieces",
+                    " Your aim is to capture all the opponent's pieces",
+                    " You want to have no enemy pieces remaining"]]]
 
-HowCapturePieces = [[["Pieces are taken by moving away or towards enemy pieces along one of the lines on the board",
-                    "To take a piece, move away or towards an opponent's piece along a line on the board",
-                    "Moving along the lines of the board, towards or away from an  opponent's piece will take it"
+HowCapturePieces = [[[" Pieces are taken by moving away or towards enemy pieces along one of the lines on the board",
+                    " To take a piece, move away or towards an opponent's piece along a line on the board",
+                    " Moving along the lines of the board, towards or away from an  opponent's piece will take it"
                     ]],
                     [[
-                    "all pieces in the chosen direction on the line of movement are captured",
-                    "in the chosen direction all your oponnent's pieces get removed from the board"]]]
+                    " all pieces in the chosen direction on the line of movement are captured",
+                    " in the chosen direction all your oponnent's pieces get removed from the board"]]]
 
-HowMove = [[["If you capture a piece then you can move again",
-                    "You can move again, if you capture a piece",
-                    "Capturing a piece means you can move again",
+HowMove = [[[" If you capture a piece then you can move again",
+                    " You can move again, if you capture a piece",
+                    " Capturing a piece means you can move again",
                     ],
 
                 [
-                    "and you can move up to one space in each direction in one turn, if you capture at least one piece per move",
-                    "in one turn you can move up to one space in each direction, provided you capture a piece per move",
-                    "provided you capture a piece in each move, you can move up to one space in each direction in a turn"
+                    " and you can move up to one space in each direction in one turn, if you capture at least one piece per move",
+                    " in one turn you can move up to one space in each direction, provided you capture a piece per move",
+                    " provided you capture a piece in each move, you can move up to one space in each direction in a turn"
                     ]],
                 
                 [[
-                    "You must move at least once a turn",
-                    "Each turn you must move at least once",
-                    "In a turn you have to move at least once"
+                    " You must move at least once a turn",
+                    " Each turn you must move at least once",
+                    " In a turn you have to move at least once"
                     ],
                 [
-                    "and when moving you must capture if its possible",
-                    "if its possible to capture and you choose to move, you must move to capture"
-                    "capturing moves always take priority"]]]
+                    " and when moving you must capture if its possible",
+                    " if its possible to capture and you choose to move, you must move to capture"
+                    " capturing moves always take priority"]]]
                 
-YouCheat = [[["You have clearly cheated",
-                "No cheating please",
-                "I can see the pieces on the board aren't in the right place",
-                "The pieces on the board are not in the correct place"
+YouCheat = [[[" You have clearly cheated",
+                " No cheating please",
+                " I can see the pieces on the board aren't in the right place",
+                " The pieces on the board are not in the correct place"
                 ]],
             [[
-                "please move the pieces back.",
-                "return them to their original positions"]]]
+                " please move the pieces back.",
+                " return them to their original positions"]]]
             
-RemovePieces = [[["Please remove these pieces", "Please remove the flashing pieces", "Please be a darling and remove these pieces"]]]
+RemovePieces = [[[" Please remove these pieces", " Please remove the flashing pieces", " Please be a darling and remove these pieces"]]]
 
 HaveYouFinished = [[[
                 "", "", "", "", "Faster faster!", "mere human"],
