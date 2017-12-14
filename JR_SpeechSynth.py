@@ -233,6 +233,7 @@ DidntUnderstand = [[["I'm sorry i didnt understand that", "Please say that again
 
 IntroduceRobot = [[["Hi, I am a robot and I am here to teach you a very fun game"],[" Please don't ask me about anything else but the game, because this is all I know about!"]]]
 
+
 def speakWords(robotip = "192.168.0.100", input_d = 6):
     
     IP = robotip
@@ -306,6 +307,7 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
     elif input_d == 29:
         token = AreYouSureGameRestart
     elif input_d == 30:
+<<<<<<< Updated upstream
         token = PassTurnYN
     elif input_d == 31:
         token = DidntUnderstand
@@ -315,6 +317,9 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = IntroduceRobot
         
 
+=======
+        token = DidntUnderstand
+>>>>>>> Stashed changes
     else:
         token = ["Error Error, Invalid Command"]
     
