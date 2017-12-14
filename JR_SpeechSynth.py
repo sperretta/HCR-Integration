@@ -312,7 +312,7 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         command = ""
         for j in token[i]:
             command = command + j[random.randint(0, len(j)-1)]
-        time.sleep(0.7)
+        time.sleep(0.3)
         print "Command: ",command
         tts.say(command)
     
