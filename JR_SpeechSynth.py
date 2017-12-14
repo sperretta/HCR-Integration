@@ -98,9 +98,9 @@ MovePieces = [[[" Could you move that piece?",
 AskToPlay = [[[" Would you like to play a game?",
                     " Do you want to play a game?",
                     " Would one kindly wish to partake in a game?"
-                    ],
-                [" I would like to use the orange pieces. Orange is the best colour as you can see from me"
-                    ]]]
+                ]]]
+                
+RobotPlayInfo = [[[" I would like to use the orange pieces. Orange is the best colour as you can see from me"]]]
 
 AskIfNeedTeaching = [[[" Do you need me to",
                     " Would you like me to",
@@ -225,7 +225,7 @@ AreYouSure = [[["Are you sure you want to restart?", "Do you want to restart the
 
 PassTurnYN = [[["Would you like to pass your turn"]]]
 
-DidntUnderstand = [[["I'm sorry i didnt understand that.... Sorry", "Please say that again", "Pardon"]]]
+DidntUnderstand = [[["I'm sorry i didnt understand that", "Please say that again", "Pardon"]]]
 
 def speakWords(robotip = "192.168.0.100", input_d = 6):
     
@@ -303,6 +303,8 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = PassTurnYN
     elif input_d == 31:
         token = DidntUnderstand
+    elif input_d == 32:
+        token = RobotPlayInfo
 
     else:
         token = ["Error Error, Invalid Command"]
