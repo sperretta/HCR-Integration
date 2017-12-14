@@ -307,7 +307,6 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
     elif input_d == 29:
         token = AreYouSureGameRestart
     elif input_d == 30:
-<<<<<<< Updated upstream
         token = PassTurnYN
     elif input_d == 31:
         token = DidntUnderstand
@@ -315,11 +314,6 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = RobotPlayInfo
     elif input_d == 33:
         token = IntroduceRobot
-        
-
-=======
-        token = DidntUnderstand
->>>>>>> Stashed changes
     else:
         token = ["Error Error, Invalid Command"]
     
