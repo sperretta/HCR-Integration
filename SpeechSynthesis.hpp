@@ -34,12 +34,13 @@
 #define HelloBasic 28
 #define AreYouSureGameRestart 29
 #define PassTurnYN 30
+#define DidntUnderstand 31
 
 class SpeechSynthesis :
     public pyWrap
 {
     public:
-        SpeechSynthesis() : pyWrap( "SpeechSynthesis", "speakWords", 2 ) { }
+        SpeechSynthesis() : pyWrap( "JR_SpeechSynth", "speakWords", 2 ) { }
         ~SpeechSynthesis() = default;
 	void operator()( std::string IP, int token)
         {

@@ -12,8 +12,8 @@
 
 // Final todos:
 // Make the ai move only ask for the pieces to be moved once
-// Call the flash pieces at the correct time? May already be ok
-// "Nothing" -> "I don't understand"
+// Call the flash pieces at the correct time? May already be ok (cases 10 and 12)
+// Put IP in one place, put distance, timeout, etc. in one place
 
 Arrow movDirToArrow( Direction dir )
 {
@@ -92,15 +92,17 @@ void Interfacing::update()
 	    {
 		std::string response("");
 
+	    	(*m_synthesis)("192.168.0.100", Greeting);
 		do {
 			(*m_moveHead)("192.168.0.100", 20);
-	    	(*m_synthesis)("192.168.0.100", Greeting);
-		    response = (*m_speechRecog)(15, 20); // TODO: Increase timeout based on testing
+		    response = (*m_speechRecog)(15, 20);
 		    std::cout<<response<<std::endl; //JR EDIT
+		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 		} while(response != "hello robot");
 
 		if( response == "hello robot" )
 		{
+			(*m_moveHead)("192.168.0.100", 20);
 	    		(*m_synthesis)("192.168.0.100", HelloBasic);
 			transitionState( HighState::Info );
 		}
@@ -116,6 +118,7 @@ void Interfacing::update()
 		do {
 		    response = (*m_speechRecog)(10, 20);
 		    std::cout<<response<<std::endl; //JR EDIT
+		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 		} while(response != "yes" && response != "no");
 
 		if( response == "yes" )
@@ -137,6 +140,7 @@ void Interfacing::update()
 		do {
 		    response = (*m_speechRecog)(10, 20);
 		    std::cout<<response<<std::endl; //JR EDIT
+		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 		} while(response != "yes" && response != "no");
 
 		if( response == "yes" )
@@ -158,6 +162,7 @@ void Interfacing::update()
 		do {
 		    response = (*m_speechRecog)(10, 20);
 		    std::cout<<response<<std::endl; //JR EDIT
+		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 		} while(response != "yes" && response != "no");
 
 		if( response == "yes" )
@@ -175,6 +180,7 @@ void Interfacing::update()
         case HighState::Play: // BLOCKING
             while(1)
             {
+reRead:
                 std::vector<Piece> gameBoard = ( *m_readBoard )( "/dev/video0" );
                 if ( gameBoard.size() != 45 )
                 {
@@ -193,22 +199,26 @@ void Interfacing::update()
                         // TODO: Repeat only so often
 			//auto timeNow = std::chrono::high_resolution_clock::now();
 			    {
+			(*m_moveHead)("192.168.0.100", 20);
 	    		(*m_synthesis)("192.168.0.100", MyTurn);
                         std::cout << "Move the AI piece!" << std::endl;
 			if( (int)gameInfo.displayMove.x >= 0 && (int)gameInfo.displayMove.x <= 2 ) // 0-2
 			{
-			    (*m_synthesis)("192.168.0.100", MovePieces);
+			(*m_moveHead)("192.168.0.100", 20);
 	    			(*m_gesturing)("192.168.0.100", 1);
+			    (*m_synthesis)("192.168.0.100", MovePieces);
 			}
 			else if( (int)gameInfo.displayMove.x >= 3 && (int)gameInfo.displayMove.x <= 5 ) // 3-5
 			{
-			    (*m_synthesis)("192.168.0.100", MovePieces);
+			(*m_moveHead)("192.168.0.100", 20);
 	    			(*m_gesturing)("192.168.0.100", 2);
+			    (*m_synthesis)("192.168.0.100", MovePieces);
 			}
 			if( (int)gameInfo.displayMove.x >= 6 && (int)gameInfo.displayMove.x <= 8 ) // 6-8
 			{
-				(*m_synthesis)("192.168.0.100", MovePieces);
+			(*m_moveHead)("192.168.0.100", 20);
 	    			(*m_gesturing)("192.168.0.100", 0);
+				(*m_synthesis)("192.168.0.100", MovePieces);
 			}
 			    }
                         m_boardGraphics.setPosState( gameInfo.displayMove.x, gameInfo.displayMove.y, PositionState::FlashGreen, movDirToArrow(gameInfo.displayMove.mov_dir) );
@@ -245,18 +255,21 @@ void Interfacing::update()
                     }
                     else if( m_gameInterface->get_current_player() == p1 && gameInfo.moveStatus == noMove) // If gameInfo is in a state where there are no more possible moves...
                     {
-	    		(*m_synthesis)("192.168.0.100", YourTurn);
-                        std::cout << "Would you like to pass your turn?" << std::endl;
+			(*m_moveHead)("192.168.0.100", 20);
+	    		(*m_synthesis)("192.168.0.100", YourTurn); // Only accept pass, prompt after x seconds like AI
+			(*m_synthesis)("192.168.0.100", HaveYouFinished);
 
 			std::string response("");
 
 			do {
-			    response = (*m_speechRecog)(10, 20);
+			    response = (*m_speechRecog)(20, 20);
 			    std::cout<<response<<std::endl; //JR EDIT
-			} while(response != "yes" && response != "no" && response != "restart"); // ADd confirmation for restart
+			if(response == "Nothing" || response == "Timeout!") {goto reRead;}
+		    if( response == "Command Not Recognised"  ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
+			} while(response != "yes" && response != "no" && response != "pass" && response != "restart"); // ADd confirmation for restart
 
 			// Change this!
-			if( response == "yes" )
+			if( response == "yes" || response == "pass" )
 			{
 			    m_gameInterface->pass_turn();
 			}
@@ -266,10 +279,12 @@ void Interfacing::update()
 			}
 			else if( response == "restart" )
 			{
+			(*m_moveHead)("192.168.0.100", 20);
 				(*m_synthesis)("192.168.0.100", AreYouSureGameRestart);
 				do {
 				    response = (*m_speechRecog)(10, 20);
 				    std::cout<<response<<std::endl; //JR EDIT
+		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 				} while(response != "yes" && response != "no"); // ADd confirmation for restart
 				if( response == "yes" )
 				{
@@ -286,26 +301,31 @@ void Interfacing::update()
                         m_boardGraphics.clearStates();
 	    		(*m_gesturing)("192.168.0.100", 3);
                     }
-		    // TODO: Put this in the right place
 		    // TODO: Show board corections if starts invalid
-		    // TODO: Ask to remove pieces as well as move
 		    // TODO: Board correction: flash while camera not being used for reading. (targetBoard)
+		    // TODO: DO this for state 10 and 12
+		    if(gameInfo.captures.size() != 0)
+		    {
+				(*m_synthesis)("192.168.0.100", RemovePieces);
+			}
 			for( auto& piece : gameInfo.captures )
 			{
 				unsigned x = piece % 9;
 				unsigned y = piece / 9;
 				m_boardGraphics.setPosState( x, y, PositionState::FlashGreen, Arrow::None );
 			}
-                    // TODO: Handle other input? Cancelling game etc?
+		    //std::this_thread::sleep_for(2s);
                 }
                 else
                 {
-		    if(m_gameInterface->get_current_player() == p2)
+		    if(m_gameInterface->get_current_player() == p1)
 		    {
+			(*m_moveHead)("192.168.0.100", 20);
 			    (*m_synthesis)("192.168.0.100", YouWin);
 		    }
 		    else
 		    {
+			(*m_moveHead)("192.168.0.100", 20);
 	    		(*m_synthesis)("192.168.0.100", IWin);
 		    }
                     transitionState( HighState::Wait );
@@ -325,6 +345,7 @@ void Interfacing::transitionState( HighState nextState )
     switch( m_currentHighState )
     {
         case HighState::Wait: // NON-BLOCKING
+	    		(*m_gesturing)("192.168.0.100", 3);
 		break;
 
         case HighState::Play: // BLOCKING
@@ -344,20 +365,27 @@ void Interfacing::transitionState( HighState nextState )
         case HighState::Info:
             // TODO: Explain the information to the user
             // TODO: Setup speech recognition
+			(*m_moveHead)("192.168.0.100", 20);
 	    (*m_synthesis)("192.168.0.100", AskIfNeedTeaching);
             m_currentHighState = HighState::Info;
             break;
 
         case HighState::Tutorial:
             // TODO: Other states, etc.
-	    (*m_synthesis)("192.168.0.100", HowCapturePieces);
-	    (*m_synthesis)("192.168.0.100", HowMove);
+			(*m_moveHead)("192.168.0.100", 20);
+	    (*m_synthesis)("192.168.0.100", Introduction);
+			//(*m_moveHead)("192.168.0.100", 20);
+	    //(*m_synthesis)("192.168.0.100", HowCapturePieces);
+		//	(*m_moveHead)("192.168.0.100", 20);
+	   // (*m_synthesis)("192.168.0.100", HowMove);
+			(*m_moveHead)("192.168.0.100", 20);
 	    (*m_synthesis)("192.168.0.100", TutorialAgain);
 	    // TODO: AskToPlay state so that it can be transitioned to from both Tutorial and Info (if the user says no)
             m_currentHighState = HighState::Tutorial;
             break;
 
 	case HighState::AskPlay:
+			(*m_moveHead)("192.168.0.100", 20);
 	    (*m_synthesis)("192.168.0.100", AskToPlay);
             m_currentHighState = HighState::AskPlay;
 	    break;

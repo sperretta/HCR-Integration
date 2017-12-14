@@ -17,7 +17,7 @@ import edit_distance_lib
 
 import time
 
-THRESHOLD = 8000
+THRESHOLD = 8700
 CHUNK_SIZE = 1024
 FORMAT = pyaudio.paInt16
 RATE = 44100
