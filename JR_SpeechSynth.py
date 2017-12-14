@@ -213,6 +213,8 @@ TutorialAgain = [[["Would you like to hear my tutorial again", "Should I repeat 
 
 HelloBasic = [[["Hello there", "Hello human", "Hello mere human", "Hello", "Good day", "Hi", "Greetings"]]]
 
+AreYouSure = [[["Are you sure you want to restart?", "Do you want to restart the game?"]]]
+
 def speakWords(robotip = "192.168.0.100", input_d = 6):
     
     IP = robotip
@@ -283,7 +285,8 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = TutorialAgain
     elif input_d == 28:
         token = HelloBasic
-    
+    elif input_d == 29:
+        token = AreYouSureGameRestart
     else:
         token = ["Invalid Command"]
     
