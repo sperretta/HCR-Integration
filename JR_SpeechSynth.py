@@ -4,8 +4,8 @@ from naoqi import ALProxy
 import random, time
 
 Introduction = [[[   " This game is called Fanorona, it is for two players",
-                    " Fanorama is a two player game",
-                    " This game involves two players, it is called Fanorama"
+                    " Fanorona is a two player game",
+                    " This game involves two players, it is called Fanorona"
                     ],
                 
                 [   " and there are two sets of coloured chips, one for each player",
@@ -227,6 +227,8 @@ PassTurnYN = [[["Would you like to pass your turn"]]]
 
 DidntUnderstand = [[["I'm sorry i didnt understand that", "Please say that again", "Pardon"]]]
 
+IntroduceRobot = [[["Hi, I am a robot and I am here to teach you a very fun game"],[" Please don't ask me about anything else but the game, because this is all I know about!"]]]
+
 def speakWords(robotip = "192.168.0.100", input_d = 6):
     
     IP = robotip
@@ -305,6 +307,9 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = DidntUnderstand
     elif input_d == 32:
         token = RobotPlayInfo
+    elif input_d == 33:
+        token = IntroduceRobot
+        
 
     else:
         token = ["Error Error, Invalid Command"]
