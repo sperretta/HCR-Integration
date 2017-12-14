@@ -8,10 +8,11 @@ Introduction = [[[   " This game is called Fanorona, it is for two players",
                     " This game involves two players, it is called Fanorona"
                     ],
                 
-                [   " and there are two sets of coloured chips, one for each player",
-                    " each player has a set of chips in one colour",
-                    " we each get a number of chips of the same colour"
+                [   " and there are two sets of coloured chips, one for each player.",
+                    " each player has a set of chips in one colour.",
+                    " we each get a number of chips of the same colour."
                     ]],
+                [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], 
                 [[
                     " The game is played on a 9 by 5 grid",
                     " The game board is 9 pieces by 5",
@@ -22,6 +23,7 @@ Introduction = [[[   " This game is called Fanorona, it is for two players",
                     " your aim is to remove all enemy pieces",
                     " and you want to have no enemy pieces remaining"
                     ]],
+                [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], 
                 [[
                     " Pieces are taken by moving away or towards enemy pieces along one of the lines on the board",
                     " To take a piece, move away or towards an opponent's piece along a line on the board",
@@ -31,6 +33,7 @@ Introduction = [[[   " This game is called Fanorona, it is for two players",
                     " all pieces in the chosen direction on the line of movement are captured",
                     " in the chosen direction all your oponnent's pieces get removed from the board"
                     ]],
+                [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], 
                 [[
                     " If you capture a piece then you can move again",
                     " You can move again, if you capture a piece",
@@ -41,6 +44,7 @@ Introduction = [[[   " This game is called Fanorona, it is for two players",
                     " in one turn, you can move up to one space in each direction, provided you capture a piece per move",
                     " provided you capture a piece in each move, you can move up to one space in each direction in a turn"
                     ]],
+                [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]], [[" "]],
                 [[
                     " You must move at least once a turn",
                     " Each turn you must move at least once",
@@ -319,7 +323,7 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         command = ""
         for j in token[i]:
             command = command + j[random.randint(0, len(j)-1)]
-        time.sleep(0.3)
+        time.sleep(0.5)
         print "Command: ",command
         tts.say(command)
     
