@@ -7,7 +7,7 @@ int main( int argc, char **argv )
 {
     Interfacing iface( argc, argv, HighState::Wait );
 
-    iface.transitionState( HighState::PlayNoHelp );
+    //iface.transitionState( HighState::Play );
 
     while( iface.shouldContinue() )
     {

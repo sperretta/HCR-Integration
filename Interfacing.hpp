@@ -20,8 +20,7 @@ enum class HighState
     Info,
     Tutorial,
     CheckHelp,
-    PlayHelp,
-    PlayNoHelp,
+    Play,
     End,
 };
 

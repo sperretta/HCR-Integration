@@ -10,7 +10,12 @@
 
 #include <limits>
 
-// TODO: Move this elsewhere?
+// Final todos:
+// Make the ai move only ask for the pieces to be moved once
+// Call the flash pieces at the correct time? May already be ok
+// Add in speech things
+// Move head randomly when starting to speak (moveHeadRandom)
+
 Arrow movDirToArrow( Direction dir )
 {
     switch( dir )
@@ -64,6 +69,7 @@ Interfacing::Interfacing( int argc, char **argv, HighState initialState ) : m_cu
 
     // Initialise speech synthesis
     m_synthesis = std::make_shared<SpeechSynthesis>();
+	transitionState( initialState );
 }
 
 Interfacing::~Interfacing()
@@ -79,36 +85,70 @@ void Interfacing::update()
 {
     switch( m_currentHighState )
     {
-        case HighState::Wait: // NON-BLOCKING
-            // Wait for face to appear
-            // Transition to Info
-            //if( faceRecognition.checkForFace() )
-            //{
-                //transitionState( HighState::Info );
-            //}
+        case HighState::Wait: // BLOCKING
+		// TODO: Wait for "hello robot"
+	    (*m_synthesis)("192.168.0.100", Greeting);
+	    {
+		std::string response("");
+
+		do {
+		    response = (*m_speechRecog)(10, 20); // TODO: Increase timeout based on testing
+		    std::cout<<response<<std::endl; //JR EDIT
+		} while(response != "what is the game called" && response != "hello robot");
+		// TODO: Say hi back
+
+		//if( response == "yes" )
+		{
+	    		//(*m_synthesis)("192.168.0.100", Introduction);
+			transitionState( HighState::Info );
+		}
+	    }
             break;
 
         case HighState::Info: // BLOCKING
             // Explain information in transition, waiting for response
             // Transition to Tutorial or CheckHelp
-            //{
-                //auto response = invalid;
-                //while( response == invalid )
-                //{
-                    //response = speechRecognition.getResponse();
-                    //switch( response )
-                    //{
-                        //case yes:
-                            //// TODO: Change state to tutorial
-                        //case no:
-                            //// TODO: Change state to check help
-                    //}
-                //}
-            //}
+	    {
+		std::string response("");
+
+		do {
+		    response = (*m_speechRecog)(10, 20);
+		    std::cout<<response<<std::endl; //JR EDIT
+		} while(response != "yes" && response != "no");
+
+		if( response == "yes" )
+		{
+			transitionState( HighState::Tutorial );
+		}
+		else // if( response == "no" )
+		{
+			// TODO: Implement
+			transitionState( HighState::Play );
+		}
+	    }
             break;
 
         case HighState::Tutorial: // BLOCKING
             // TODO: Other states, etc.
+	    //(*m_synthesis)("192.168.0.100", Tutorial); //Needs to be changed to tutorial
+	    {
+		std::string response("");
+
+		do {
+		    response = (*m_speechRecog)(10, 20);
+		    std::cout<<response<<std::endl; //JR EDIT
+		} while(response != "yes" && response != "no");
+
+		if( response == "yes" )
+		{
+			transitionState( HighState::Play );
+		}
+		else // if( response == "no" )
+		{
+			// TODO: Say something 
+			transitionState( HighState::Wait );
+		}
+	    }
             break;
 
         case HighState::CheckHelp: // BLOCKING
@@ -128,10 +168,7 @@ void Interfacing::update()
             //}
             break;
 
-        case HighState::PlayHelp: // BLOCKING
-            break;
-
-        case HighState::PlayNoHelp: // BLOCKING
+        case HighState::Play: // BLOCKING
             while(1)
             {
                 std::vector<Piece> gameBoard = ( *m_readBoard )( "/dev/video0" );
@@ -147,14 +184,11 @@ void Interfacing::update()
                 {
                     gameInfo = m_gameInterface->run_game(gameBoard);
                     std::cout << gameInfo.moveStatus << std::endl;
-                    // TODO: Notify user to move pieces with graphics things (flash board)
-                    // TODO: Tell user where to move pieces on AI turn
                     if( m_gameInterface->get_current_player() == p2 && gameInfo.displayMove.mov_dir != no_dir )
                     {
                         // TODO: Do this once and wait!!
 	    		(*m_synthesis)("192.168.0.100", MyTurn);
                         std::cout << "Move the AI piece!" << std::endl;
-			// TODO: Robot say this and point
 			if( (int)gameInfo.displayMove.x >= 0 && (int)gameInfo.displayMove.x <= 2 ) // 0-2
 			{
 			    (*m_synthesis)("192.168.0.100", MovePieces);
@@ -204,24 +238,28 @@ void Interfacing::update()
                     }
                     else if( m_gameInterface->get_current_player() == p1 && gameInfo.moveStatus == noMove) // If gameInfo is in a state where there are no more possible moves...
                     {
-			// TODO: Get robot to say this instead
 	    		(*m_synthesis)("192.168.0.100", YourTurn);
                         std::cout << "Would you like to pass your turn?" << std::endl;
 
 			std::string response("");
 
-			// TODO: Say something 
 			do {
 			    response = (*m_speechRecog)(10, 20);
-			} while(response != "yes" && response != "no");
+			    std::cout<<response<<std::endl; //JR EDIT
+			} while(response != "yes" && response != "no" && response != "restart");
 
+			// Change this!
 			if( response == "yes" )
 			{
 			    m_gameInterface->pass_turn();
 			}
-			else
+			else if( response == "no" )
 			{
 			    continue;
+			}
+			else if( response == "restart" )
+			{
+				transitionState(HighState::Play);
 			}
                     }
                     else if( gameInfo.displayMove.mov_dir == no_dir )
@@ -230,6 +268,8 @@ void Interfacing::update()
 	    		(*m_gesturing)("192.168.0.100", 3);
                     }
 		    // TODO: Put this in the right place
+		    // TODO: Show board corections if starts invalid
+		    // TODO: Ask to remove pieces as well as move
 			for( auto& piece : gameInfo.captures )
 			{
 				unsigned x = piece % 9;
@@ -240,30 +280,36 @@ void Interfacing::update()
                 }
                 else
                 {
-                    // TODO: Finish this, move into next state
-                    // TODO: Robot says player has won
-                    std::cerr<< "Player " << m_gameInterface->get_current_player() << " wins!" << std::endl;
-                    transitionState( HighState::End );
+		    if(m_gameInterface->get_current_player() == p2)
+		    {
+			    (*m_synthesis)("192.168.0.100", YouWin);
+		    }
+		    else
+		    {
+	    		(*m_synthesis)("192.168.0.100", IWin);
+		    }
+                    //transitionState( HighState::End );
+                    transitionState( HighState::Wait );
                     break;
                 }
             }
             break;
 
-        case HighState::End: // NON-BLOCKING
-            // TODO: Wait for face to no longer be in frame
+        case HighState::End: // BLOCKING
+	    // TODO: Wait for goodbye etc?
             break;
     }
 }
 
 void Interfacing::transitionState( HighState nextState )
 {
-    // TODO: Also do things based on current state
     switch( m_currentHighState )
     {
         case HighState::Wait: // NON-BLOCKING
 		break;
 
-        case HighState::PlayNoHelp: // BLOCKING
+        case HighState::Play: // BLOCKING
+		m_gameInterface.reset();
             m_boardGraphics.setActive( false );
             break;
         default:
@@ -273,32 +319,35 @@ void Interfacing::transitionState( HighState nextState )
     switch( nextState )
     {
         case HighState::Wait:
-            // TODO: Setup face recognition
-	    (*m_synthesis)("192.168.0.100", Greeting);
             m_currentHighState = HighState::Wait;
             break;
 
         case HighState::Info:
             // TODO: Explain the information to the user
             // TODO: Setup speech recognition
+	    (*m_synthesis)("192.168.0.100", AskIfNeedTeaching);
             m_currentHighState = HighState::Info;
             break;
 
         case HighState::Tutorial:
             // TODO: Other states, etc.
+	    (*m_synthesis)("192.168.0.100", HowCapturePieces);
+	    (*m_synthesis)("192.168.0.100", HowMove);
+	    (*m_synthesis)("192.168.0.100", AskToPlay);
+	    // TODO: AskToPlay state so that it can be transitioned to from both Tutorial and Info (if the user says no)
+            m_currentHighState = HighState::Tutorial;
             break;
 
-        case HighState::PlayHelp: // BLOCKING
-            m_boardGraphics.setActive( true );
-            break;
-
-        case HighState::PlayNoHelp: // BLOCKING
+        case HighState::Play: // BLOCKING
             m_gameInterface = std::make_shared<GameInterface>(p2, DIFFICULTY);
             m_gameInterface->enable_debug();
             m_boardGraphics.setActive( true );
-            m_currentHighState = HighState::PlayNoHelp;
+            m_currentHighState = HighState::Play;
             std::this_thread::sleep_for(1s);
             break;
+
+        case HighState::End: // BLOCKING
+	    break;
 
         default:
             return;

@@ -203,8 +203,9 @@ reset_list = ['restart', 'reset', 'reboot']
 pass_list = ['pass', 'skip']
 help_list = ['help', 'assistance', 'assistant', 'please help', 'I dont understand what to do', "I'm confused", 'what am I supposed to do', 'give me a hand' ]
 game_info = ['what is the game called', 'information', ' info', 'robot please tell me about this game']
+robot_hello = ['hello robot', 'hi robot']
 
-dictionary_list = [yes_list, no_list, reset_list, pass_list, help_list, game_info]
+dictionary_list = [yes_list, no_list, reset_list, pass_list, help_list, game_info, robot_hello]
 
 def search_dict(input_str):
     tmp_val = 1000000
