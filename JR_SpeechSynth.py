@@ -215,6 +215,8 @@ HelloBasic = [[["Hello there", "Hello human", "Hello mere human", "Hello", "Good
 
 AreYouSure = [[["Are you sure you want to restart?", "Do you want to restart the game?"]]]
 
+PassTurnYN = [[["Would you like to pass your turn"]]]
+
 def speakWords(robotip = "192.168.0.100", input_d = 6):
     
     IP = robotip
