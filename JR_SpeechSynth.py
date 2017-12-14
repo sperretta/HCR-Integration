@@ -211,6 +211,8 @@ MustCapture = [[["You must capture a piece"]]]
 
 TutorialAgain = [[["Would you like to hear my tutorial again", "Should I repeat that"]]]
 
+HelloBasic = [[["Hello there", "Hello human", "Hello mere human", "Hello", "Good day", "Hi", "Greetings"]]]
+
 def speakWords(robotip = "192.168.0.100", input_d = 6):
     
     IP = robotip
@@ -279,6 +281,8 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = MustCapture
     elif input_d == 27:
         token = TutorialAgain
+    elif input_d == 28:
+        token = HelloBasic
     
     else:
         token = ["Invalid Command"]
