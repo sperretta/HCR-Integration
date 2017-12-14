@@ -217,6 +217,8 @@ AreYouSure = [[["Are you sure you want to restart?", "Do you want to restart the
 
 PassTurnYN = [[["Would you like to pass your turn"]]]
 
+DidntUnderstand = [[["I'm sorry i didnt understand that.... Sorry", "Please say that again", "Pardon"]]]
+
 def speakWords(robotip = "192.168.0.100", input_d = 6):
     
     IP = robotip
@@ -291,6 +293,9 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = AreYouSureGameRestart
     elif input_d == 30:
         token = PassTurnYN
+    elif input_d == 31:
+        token = DidntUnderstand
+
     else:
         token = ["Invalid Command"]
     
