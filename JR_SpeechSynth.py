@@ -189,6 +189,27 @@ YouCheat = [[["You have clearly cheated",
             [[
                 "please move the pieces back.",
                 "return them to their original positions"]]]
+            
+RemovePieces = [[["Please remove these pieces", "Please remove the flashing pieces", "Please be a darling and remove these pieces"]]]
+
+HaveYouFinished = [[[
+                "", "", "", "", "Faster faster!", "mere human"],
+                ["Have you finished your turn", "Is it my turn yet", "Chop chop, have you finished your turn"]]]
+
+KeepMovingSame = [[["You can only move the same piece!"]]]
+
+
+NotYourPiece = [[["That's not your piece"]]]
+
+CantMoveSameDirection = [[["You cant move in the same direction twice"]]]
+
+InvalidCapture = [[["That's an invalid capture"]]]
+
+CantGoBackToSameSpot = [[["You cant move to a location you have already been in this turn"]]]
+
+MustCapture = [[["You must capture a piece"]]]
+
+TutorialAgain = [[["Would you like to hear my tutorial again", "Should I repeat that"]]]
 
 def speakWords(robotip = "192.168.0.100", input_d = 6):
     
@@ -199,7 +220,7 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
     except Exception,e:
         print "Could not create proxy to ALTextToSpeech"
         print "Error was: ",e
-        sys.exit(0.7)
+        sys.exit(1)
         
     #Says a test std::string
     
@@ -240,6 +261,25 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = HowMove
     elif input_d == 18:
         token = YouCheat
+    elif input_d == 19:
+        token = RemovePieces
+    elif input_d == 20:
+        token = HaveYouFinished
+    elif input_d == 21:
+        token = KeepMovingSame
+    elif input_d == 22:
+        token = NotYourPiece
+    elif input_d == 23:
+        token = CantMoveSameDirection
+    elif input_d == 24:
+        token = InvalidCapture
+    elif input_d == 25:
+        token = CantGoBackToSameSpot
+    elif input_d == 26:
+        token = MustCapture
+    elif input_d == 27:
+        token = TutorialAgain
+    
     else:
         token = ["Invalid Command"]
     

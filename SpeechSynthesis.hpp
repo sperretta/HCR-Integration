@@ -22,6 +22,8 @@
 #define HowCapturePieces 16
 #define HowMove 17
 #define YouCheat 18
+#define RemovePieces 19
+#define HaveYouFinished 20
 
 class SpeechSynthesis :
     public pyWrap

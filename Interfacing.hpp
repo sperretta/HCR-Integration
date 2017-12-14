@@ -11,6 +11,7 @@
 #include <SpeechRecog.hpp>
 #include <Gesturing.hpp>
 #include <SpeechSynthesis.hpp>
+#include <MoveHead.hpp>
 
 #define DIFFICULTY 3
 
@@ -19,7 +20,7 @@ enum class HighState
     Wait,
     Info,
     Tutorial,
-    CheckHelp,
+    AskPlay,
     Play,
     End,
 };

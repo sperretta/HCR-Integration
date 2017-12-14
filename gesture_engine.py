@@ -248,9 +248,9 @@ def move_head(robotIp="192.168.0.100", pitch=0, yaw=0):
     move = Headmovement(robotIp)
     move.movehead(pitch,yaw)
     
-def move_head_random(robotIp="192.168.0.100"):
+def move_head_random(robotIp="192.168.0.100", dist = 30):
     move = Headmovement(robotIp)
-    move.movehead(random.uniform(-50, 50),random.uniform(-50, 50))
+    move.movehead(random.uniform(-dist, dist),random.uniform(-dist, dist))
     
 def sweep_head(robotIp="192.168.0.100"):
     move = Headmovement(robotIp)
