@@ -46,6 +46,7 @@ class Interfacing
 	std::shared_ptr<SpeechRecog> m_speechRecog;
 	std::shared_ptr<Gesturing> m_gesturing;
 	std::shared_ptr<SpeechSynthesis> m_synthesis;
+	std::shared_ptr<MoveHead> m_moveHead;
 };
 
 #endif // INTERFACING_HPP

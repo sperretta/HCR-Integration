@@ -13,8 +13,7 @@
 // Final todos:
 // Make the ai move only ask for the pieces to be moved once
 // Call the flash pieces at the correct time? May already be ok
-// Move head randomly when starting to speak (moveHeadRandom)
-// "I don't understand"
+// "Nothing" -> "I don't understand"
 
 Arrow movDirToArrow( Direction dir )
 {
@@ -69,6 +68,9 @@ Interfacing::Interfacing( int argc, char **argv, HighState initialState ) : m_cu
 
     // Initialise speech synthesis
     m_synthesis = std::make_shared<SpeechSynthesis>();
+
+    // Initialise head movement
+    m_moveHead = std::make_shared<MoveHead>();
 	transitionState( initialState );
 }
 
@@ -91,6 +93,7 @@ void Interfacing::update()
 		std::string response("");
 
 		do {
+			(*m_moveHead)("192.168.0.100", 20);
 	    	(*m_synthesis)("192.168.0.100", Greeting);
 		    response = (*m_speechRecog)(15, 20); // TODO: Increase timeout based on testing
 		    std::cout<<response<<std::endl; //JR EDIT
@@ -98,7 +101,7 @@ void Interfacing::update()
 
 		if( response == "hello robot" )
 		{
-	    		(*m_synthesis)("192.168.0.100", Hello);
+	    		(*m_synthesis)("192.168.0.100", HelloBasic);
 			transitionState( HighState::Info );
 		}
 	    }
@@ -263,7 +266,19 @@ void Interfacing::update()
 			}
 			else if( response == "restart" )
 			{
-				transitionState(HighState::Play);
+				(*m_synthesis)("192.168.0.100", AreYouSureGameRestart);
+				do {
+				    response = (*m_speechRecog)(10, 20);
+				    std::cout<<response<<std::endl; //JR EDIT
+				} while(response != "yes" && response != "no"); // ADd confirmation for restart
+				if( response == "yes" )
+				{
+					transitionState(HighState::Play);
+				}
+				else
+				{
+					continue;
+				}
 			}
                     }
                     else if( gameInfo.displayMove.mov_dir == no_dir )

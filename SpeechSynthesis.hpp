@@ -24,6 +24,16 @@
 #define YouCheat 18
 #define RemovePieces 19
 #define HaveYouFinished 20
+#define KeepMovingSame 21
+#define NotYourPiece 22
+#define CantMoveSameDirection 23
+#define InvalidCapture 24
+#define CantGoBackToSameSpot 25
+#define MustCapture 26
+#define TutorialAgain 27
+#define HelloBasic 28
+#define AreYouSureGameRestart 29
+#define PassTurnYN 30
 
 class SpeechSynthesis :
     public pyWrap

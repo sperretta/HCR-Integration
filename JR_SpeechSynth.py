@@ -289,6 +289,8 @@ def speakWords(robotip = "192.168.0.100", input_d = 6):
         token = HelloBasic
     elif input_d == 29:
         token = AreYouSureGameRestart
+    elif input_d == 30:
+        token = PassTurnYN
     else:
         token = ["Invalid Command"]
     

@@ -3,3 +3,6 @@ RoboTutor
 *.a
 *.jpg
 *.pyc
+*.swp
+*.png
+*.wav
