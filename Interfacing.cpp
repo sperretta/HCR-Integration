@@ -93,14 +93,19 @@ void Interfacing::update()
 		std::string response("");
 
 	    	(*m_synthesis)("192.168.0.100", Greeting);
+		/*
 		do {
 			(*m_moveHead)("192.168.0.100", 20);
 		    response = (*m_speechRecog)(15, 20);
 		    std::cout<<response<<std::endl; //JR EDIT
 		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 		} while(response != "hello robot");
+		*/
 
-		if( response == "hello robot" )
+		std::cin >> response;
+		std::cout << "\"" << response << "\"" << std::endl;
+
+		if( response == "hello" )
 		{
 			(*m_moveHead)("192.168.0.100", 20);
 	    		(*m_synthesis)("192.168.0.100", HelloBasic);
@@ -115,11 +120,15 @@ void Interfacing::update()
 	    {
 		std::string response("");
 
+		/*
 		do {
 		    response = (*m_speechRecog)(10, 20);
 		    std::cout<<response<<std::endl; //JR EDIT
 		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 		} while(response != "yes" && response != "no");
+		*/
+
+		std::cin >> response;
 
 		if( response == "yes" )
 		{
@@ -137,11 +146,14 @@ void Interfacing::update()
 	    {
 		std::string response("");
 
+		/*
 		do {
 		    response = (*m_speechRecog)(10, 20);
 		    std::cout<<response<<std::endl; //JR EDIT
 		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 		} while(response != "yes" && response != "no");
+		*/
+		std::cin >> response;
 
 		if( response == "yes" )
 		{
@@ -159,11 +171,14 @@ void Interfacing::update()
 		std::string response("");
 
 		// Do you want to hear the tutorial again?
+		/*
 		do {
 		    response = (*m_speechRecog)(10, 20);
 		    std::cout<<response<<std::endl; //JR EDIT
 		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 		} while(response != "yes" && response != "no");
+		*/
+		std::cin >> response;
 
 		if( response == "yes" )
 		{
@@ -180,7 +195,7 @@ void Interfacing::update()
         case HighState::Play: // BLOCKING
             while(1)
             {
-reRead:
+//reRead:
                 std::vector<Piece> gameBoard = ( *m_readBoard )( "/dev/video0" );
                 if ( gameBoard.size() != 45 )
                 {
@@ -261,12 +276,15 @@ reRead:
 
 			std::string response("");
 
+			/*
 			do {
 			    response = (*m_speechRecog)(20, 20);
 			    std::cout<<response<<std::endl; //JR EDIT
 			if(response == "Nothing" || response == "Timeout!") {goto reRead;}
 		    if( response == "Command Not Recognised"  ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 			} while(response != "yes" && response != "no" && response != "pass" && response != "restart"); // ADd confirmation for restart
+			*/
+		std::cin >> response;
 
 			// Change this!
 			if( response == "yes" || response == "pass" )
@@ -281,11 +299,13 @@ reRead:
 			{
 			(*m_moveHead)("192.168.0.100", 20);
 				(*m_synthesis)("192.168.0.100", AreYouSureGameRestart);
+				/*
 				do {
 				    response = (*m_speechRecog)(10, 20);
 				    std::cout<<response<<std::endl; //JR EDIT
 		    if( response == "Nothing" || response == "Command Not Recognised" ) {(*m_moveHead)("192.168.0.100", 20); (*m_synthesis)("192.168.0.100", DidntUnderstand);}
 				} while(response != "yes" && response != "no"); // ADd confirmation for restart
+				*/
 				if( response == "yes" )
 				{
 					transitionState(HighState::Play);
@@ -315,6 +335,13 @@ reRead:
 				m_boardGraphics.setPosState( x, y, PositionState::FlashGreen, Arrow::None );
 			}
 		    //std::this_thread::sleep_for(2s);
+		    if( gameInfo.moveStatus == 14)
+		    {
+			    // TODO: Add counter
+			    std::cout << "Invalid move" << std::endl;
+			(*m_synthesis)("192.168.0.100", IllegalMove);
+		    std::this_thread::sleep_for(1s);
+		    }
                 }
                 else
                 {
@@ -328,6 +355,7 @@ reRead:
 			(*m_moveHead)("192.168.0.100", 20);
 	    		(*m_synthesis)("192.168.0.100", IWin);
 		    }
+		    m_gameInterface->save_log_to_file();
                     transitionState( HighState::Wait );
                     break;
                 }

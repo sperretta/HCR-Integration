@@ -6,6 +6,7 @@
 #include "structs.hpp"
 #include "enum.hpp"
 #include "ai.hpp"
+#include <fstream>
 
 class GameInterface{
 
@@ -32,6 +33,7 @@ class GameInterface{
         GameInfo run_game(std::vector<Piece> gameBoard);
         void pass_turn();
         void print_board( const std::vector<Piece>& gameBoard );
+	void save_log_to_file();
 
 };
 

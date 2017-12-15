@@ -5,14 +5,15 @@
 #include "enum.hpp"
 #include "user_io.hpp"
 #include "structs.hpp"
+#include <fstream>
 
 class GameEngine{
 	std::vector < Piece > board;
 	Piece currentPlayer;
 	Piece opponent;
 	std::vector <Move> turnLog;
-	std::vector <Move> gameLog;
 public:
+	std::vector <Move> gameLog;
 	GameEngine();
 	bool move_piece(unsigned x, unsigned y, Direction mov_dir, Direction cap_dir);
     bool move_piece(Move move);

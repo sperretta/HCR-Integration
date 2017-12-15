@@ -514,7 +514,7 @@ void GameEngine::record_move(Move newRecord){
 
 void GameEngine::save_game_log(){
 	gameLog.insert(gameLog.end(), turnLog.begin(), turnLog.end());
-	turnLog.clear();
+    	turnLog.clear();
 	return;
 }
 

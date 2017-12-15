@@ -204,9 +204,8 @@ YouCheat = [[[" You have clearly cheated",
             
 RemovePieces = [[[" Please remove these pieces", " Please remove the flashing pieces", " Please be a darling and remove these pieces"]]]
 
-HaveYouFinished = [[[
-                "", "", "", "", "Faster faster!", "mere human"],
-                ["Have you finished your turn", "Is it my turn yet", "Chop chop, have you finished your turn"]]]
+HaveYouFinished = [[
+                ["Orange is the best colour, can I have my turn yet?", "Is it my turn yet", "Can I take my turn now?"]]]
 
 KeepMovingSame = [[["You can only move the same piece!"]]]
 

@@ -253,3 +253,16 @@ void GameInterface::print_board( const std::vector<Piece>& gameBoard )
         debugOutput.print_game_board( gameBoard );
     }
 }
+
+void GameInterface::save_log_to_file(){
+	std::ofstream logDump("log.csv");
+    if(logDump.is_open()){
+        for(unsigned i=0; i<gameEngine.gameLog.size(); i++){
+            Move move;
+            move = gameEngine.gameLog.at(i);
+            logDump<<move.x <<","<<move.y<<","<<move.mov_dir<<","<<move.cap_dir<<std::endl;
+        }
+    }
+    logDump.close();
+	return;
+}
